@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exam Countdown for Dr. Ishfak Maisoor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background-color: #f3f9f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2a8a8a;
+    }
+
+    .countdown {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ecg-container {
+      margin-top: 2rem;
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+    }
+
+    .ecg-img {
+      max-width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .ecg-img:hover {
+      transform: scale(1.02);
+    }
+
+    .explanation {
+      display: none;
+      margin-top: 1rem;
+      text-align: left;
+      background-color: #eafaf7;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>⏳ MD Part 2 Countdown ⏳</h1>
+  <div class="countdown" id="countdown"></div>
+
+  <div class="ecg-container">
+    <h2>Today's ECG Flashcard 🫀</h2>
+    <img src="ecg1.jpg" alt="ECG Pattern" class="ecg-img" id="ecgImage">
+    <div class="explanation" id="explanation">
+      <strong>Diagnosis:</strong> <span id="diagnosis"></span><br><br>
+      <span id="description"></span>
+    </div>
+  </div>
+
+  <footer>Made with love by his little brother ❤️ , click refresh page to get a new ECG i didnt add a button cuz i was lazy lol </footer>
+
+  <script>
+    // Countdown
+    const targetDate = new Date("2025-08-05T08:00:00+05:30");
+    const countdownEl = document.getElementById("countdown");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        countdownEl.innerHTML = "Best of luck today! You're ready. 💪🏽";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      countdownEl.innerHTML = `${days}d ${hours}h ${mins}m ${secs}s`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // ECG Logic
+    const ecgs = [
+      {
+        src: "ecg1.jpg",
+        diagnosis: "Competing sinus and idioventricular rhythms",
+        explanation: `Ventricular rhythm at 60 bpm<br>
+        Multiple sinus capture beats<br>
+        Competing sinus and idioventricular pacemakers are present. There is an underlying sinus arrhythmia, with sinus capture occurring when the sinus rate exceeds the idioventricular rate.<br>
+        This patient was a healthy 36-year old marathon runner with presumably very high resting vagal tone causing sinus bradycardia and sinus arrhythmia.`
+      },
+      {
+        src: "ecg2.jpg",
+        diagnosis: "Ventricular rhythm with AV dissociation",
+        explanation: `Ventricular rhythm at 75 bpm<br>
+        AV dissociation — a dissociated P wave is seen in the rhythm strip (after 9th complex), another in lead aVL. Elsewhere, dissociated P waves cause intermittent deformation of the QRS complexes.<br>
+        The taller left rabbit ear sign is present — notched R wave in V1 with a taller initial R wave.`
+      },
+      {
+        src: "ecg3.jpg",
+        diagnosis: "Broad complex tachycardia post-reperfusion",
+        explanation: `Broad complex at 90 bpm<br>
+        No visible P waves<br>
+        This dysrhythmia occurred following reperfusion from an anterior STEMI.`
+      }
+    ];
+
+    const randomECG = ecgs[Math.floor(Math.random() * ecgs.length)];
+    const ecgImage = document.getElementById("ecgImage");
+    const diagnosis = document.getElementById("diagnosis");
+    const description = document.getElementById("description");
+    const explanationDiv = document.getElementById("explanation");
+
+    ecgImage.src = randomECG.src;
+
+    ecgImage.addEventListener("click", () => {
+      diagnosis.innerText = randomECG.diagnosis;
+      description.innerHTML = randomECG.explanation;
+      explanationDiv.style.display = "block";
+    });
+  </script>
+</body>
+</html>
